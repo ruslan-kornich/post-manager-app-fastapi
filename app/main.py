@@ -40,9 +40,9 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
 
 @app.post("/addPost", response_model=PostResponse)
 async def add_post(
-        post: PostCreate,
-        current_user: User = Depends(get_current_user),
-        db: Session = Depends(get_db),
+    post: PostCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ):
     db_post = Post(text=post.text, user_id=current_user.email)
     db.add(db_post)
@@ -53,7 +53,7 @@ async def add_post(
 
 @app.get("/getPosts", response_model=List[PostResponse])
 async def get_posts(
-        current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
     posts = db.query(Post).filter(Post.user_id == current_user.email).all()
     cached_data = cache.get(current_user.email)
@@ -69,9 +69,9 @@ async def get_posts(
 
 @app.delete("/deletePost/{postID}", response_model=dict)
 async def delete_post(
-        postID: int,
-        current_user: User = Depends(get_current_user),
-        db: Session = Depends(get_db),
+    postID: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
 ):
     db_post = (
         db.query(Post)
