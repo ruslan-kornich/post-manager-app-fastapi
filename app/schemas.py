@@ -1,16 +1,18 @@
 from pydantic import BaseModel, EmailStr
 
 
-class UserBase(BaseModel):
+class UserCreate(BaseModel):
     email: EmailStr
-
-
-class UserCreate(UserBase):
     password: str
 
 
-class UserLogin(UserBase):
+class UserLogin(BaseModel):
+    email: EmailStr
     password: str
+
+
+class PostCreate(BaseModel):
+    text: str
 
 
 class Token(BaseModel):
@@ -18,10 +20,10 @@ class Token(BaseModel):
     token_type: str
 
 
-class PostCreate(BaseModel):
-    text: str
+class TokenData(BaseModel):
+    email: str = None
 
 
 class PostResponse(BaseModel):
-    id: int
-    text: str
+    postID: int
+    message: str = "Post created successfully"
