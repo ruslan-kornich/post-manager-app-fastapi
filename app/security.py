@@ -1,16 +1,13 @@
-from datetime import datetime, timedelta
-from fastapi.security import OAuth2PasswordBearer
-from jwt import decode, ExpiredSignatureError, InvalidTokenError
-from passlib.context import CryptContext
 import jwt
-from fastapi.security import OAuth2PasswordBearer
+from datetime import datetime, timedelta
+from passlib.context import CryptContext
 from jwt import decode, ExpiredSignatureError, InvalidTokenError
-from typing import List
-from models import User
-
-from database import get_db
-from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi.security import OAuth2PasswordBearer
+from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
+
+from app.core.models.user import User
+from app.database import get_db
 
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -29,7 +26,7 @@ def create_access_token(data: dict, expires_delta: int = 30):
 
 # Dependency to get current user from token
 def get_current_user(
-    token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
+        token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)
 ):
     credentials_exception = HTTPException(
         status_code=401,
@@ -50,3 +47,8 @@ def get_current_user(
     if user is None:
         raise credentials_exception
     return user
+
+
+# Verify password
+def verify_password(plain_password: str, hashed_password: str):
+    return pwd_context.verify(plain_password, hashed_password)

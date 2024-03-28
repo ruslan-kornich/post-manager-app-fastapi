@@ -1,18 +1,22 @@
-from pydantic import BaseModel, EmailStr
-from typing import List
+from pydantic import BaseModel, EmailStr, constr
 
 
 class UserCreate(BaseModel):
     email: EmailStr
-    password: str
+    password: constr(min_length=8, max_length=50)
 
 
 class UserLogin(BaseModel):
     email: EmailStr
-    password: str
+    password: constr(min_length=8, max_length=50)
 
 
 class PostCreate(BaseModel):
+    text: constr(max_length=1000)
+
+
+class PostResponse(BaseModel):
+    id: int
     text: str
 
 
