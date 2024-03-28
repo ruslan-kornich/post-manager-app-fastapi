@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from typing import List
-from app.database import get_db
+from app.database.database import get_db
 from app.core.models.post import Post as ModelPost
 from app.schemas import PostResponse as SchemaPost
 from app.security import get_current_user

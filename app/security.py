@@ -7,7 +7,7 @@ from fastapi import HTTPException, Depends
 from sqlalchemy.orm import Session
 
 from app.core.models.user import User
-from app.database import get_db
+from app.database.database import get_db
 
 # Password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, HTTPException, Body
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database import get_db
+from app.database.database import get_db
 from app.core.models.post import Post as ModelPost
 from app.core.models.user import User as ModelUser
 from app.schemas import PostCreate
