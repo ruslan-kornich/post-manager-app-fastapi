@@ -15,11 +15,6 @@ class PostCreate(BaseModel):
     text: constr(max_length=1000)
 
 
-class PostResponse(BaseModel):
-    id: int
-    text: str
-
-
 class Token(BaseModel):
     access_token: str
     token_type: str
